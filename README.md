@@ -1,3 +1,5 @@
+![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/arvikon/docis) ![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/arvikon/docis)
+
 Dockerized Jekyll-centric toolkit to test, verify, and optimize static site content.
 
 The image is based on `ruby:2.6.5-alpine`, and builds with:
