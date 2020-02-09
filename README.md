@@ -1,12 +1,16 @@
 ![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/arvikon/docis) ![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/arvikon/docis)
 
+# Overview
+
 Dockerized Jekyll-centric toolkit to test, verify, and optimize static site content.
 
 The image is based on `ruby:2.6.5-alpine`, and builds with:
 
-![Jekyll version](https://img.shields.io/badge/Jekyll-4.0.0-informational) ![HTMLproofer version](https://img.shields.io/badge/HTMLproofer-3.15.1-informational) ![image_optim version](https://img.shields.io/badge/image__optim-0.26.5-informational) ![Vale version](https://img.shields.io/badge/Vale-2.0.0--beta.2-informational) ![yamllint version](https://img.shields.io/badge/yamllint-1.17.0-informational)
+[![Jekyll version](https://img.shields.io/badge/Jekyll-4.0.0-informational?style=social)](https://jekyllrb.com/) [![HTMLproofer version](https://img.shields.io/badge/HTMLproofer-3.15.1-informational?style=social)](https://github.com/gjtorikian/html-proofer) [![image_optim version](https://img.shields.io/badge/image__optim-0.26.5-informational?style=social)](https://github.com/toy/image_optim) [![Vale version](https://img.shields.io/badge/Vale-2.0.0--beta.2-informational?style=social)](https://errata-ai.github.io/vale/) [![yamllint version](https://img.shields.io/badge/yamllint-1.17.0-informational?style=social)](https://github.com/adrienverge/yamllint)
 
-**NOTE:** Although the image was created with the focus on Jekyll, you can use the tools for other content.
+# Usage
+
+Although the image was created with the focus on Jekyll, you can use the tools for other content.
 
 Below are the basic use cases with recommended commands and their explanation.
 
@@ -44,11 +48,9 @@ Upon entering Shell, you can use the tools by running the direct commands, for e
 
   Starts a container, maps the project folder with the folder inside the container (`/srv/jekyll`), and builds the Jekyll site.
 
-  **NOTE:** By default, Jekyll operates in the `development` [environment](https://jekyllrb.com/docs/configuration/environments/). If you want to build a Jekyll site in a different environment, for example `production`, use a bit modified command:
-
-  ```
-  docker run --rm -v path/to/project:/srv/jekyll arvikon/docis sh -c "JEKYLL_ENV=production jekyll b"
-  ```
+  | NOTE |
+  | :--- |
+  | By default, Jekyll operates in the `development` [environment](https://jekyllrb.com/docs/configuration/environments/). If you want to build a Jekyll site in a different environment, for example `production`, use a bit modified command: `docker run --rm -v path/to/project:/srv/jekyll arvikon/docis sh -c "JEKYLL_ENV=production jekyll b"` |
 
 - _Examples_
 
@@ -70,13 +72,15 @@ Upon entering Shell, you can use the tools by running the direct commands, for e
 
 - _Explanation_
 
-  Starts a container, maps the project folder with the folder inside the container (`/srv/jekyll`), maps the ports needed to serve the Jekyll site and access it from outside the container, and serves the Jekyll site.<br/>**IMPORTANT:** `--host 0.0.0.0` is required.
+  Starts a container, maps the project folder with the folder inside the container (`/srv/jekyll`), maps the ports needed to serve the Jekyll site and access it from outside the container, and serves the Jekyll site.
+  
+  | IMPORTANT |
+  | :--- |
+  | `--host 0.0.0.0` is required. |
 
-  **NOTE:** By default, Jekyll operates in the `development` [environment](https://jekyllrb.com/docs/configuration/environments/). If you want to serve a Jekyll site in a different environment, e.g. `production`, use a bit modified command:
-
-  ```
-  docker run --rm -it -v path/to/project:/srv/jekyll -p 4000:4000 arvikon/docis sh -c "JEKYLL_ENV=production jekyll s --host 0.0.0.0"
-  ```
+  | NOTE |
+  | :--- |
+  | By default, Jekyll operates in the `development` [environment](https://jekyllrb.com/docs/configuration/environments/). If you want to serve a Jekyll site in a different environment, e.g. `production`, use a bit modified command: `docker run --rm -it -v path/to/project:/srv/jekyll -p 4000:4000 arvikon/docis sh -c "JEKYLL_ENV=production jekyll s --host 0.0.0.0"` |
 
 - _Examples_
 
@@ -100,7 +104,11 @@ For details on using HTMLproofer, see [HTMLproofer documentation](https://github
 
 - _Explanation_
 
-  Starts a container, maps the project folder with the folder inside the container (`/srv/jekyll`), and checks links in the built site folder.<br/>**NOTE:** You have to build the project beforehand.
+  Starts a container, maps the project folder with the folder inside the container (`/srv/jekyll`), and checks links in the built site folder.
+  
+  | NOTE |
+  | :--- |
+  | You have to build the project beforehand. |
 
 - _Example_
 
@@ -139,7 +147,11 @@ For details on using Vale, see [Vale documentation](https://errata-ai.github.io/
 
 - _Explanation_
 
-  Starts a container, maps the project folder with the folder inside the container (`/srv/jekyll`), and tests source files against the styles.<br/>**TIP:** It is recommended to place the Vale configuration file (`.vale.ini` or `_vale.ini`) in the project's root.
+  Starts a container, maps the project folder with the folder inside the container (`/srv/jekyll`), and tests source files against the styles.
+  
+  | TIP  |
+  | :--- |
+  | It is recommended to place the Vale configuration file (`.vale.ini` or `_vale.ini`) in the project's root. |
 
 - _Example_
 
@@ -166,3 +178,7 @@ For details on using yamllint, see [yamllint documentation](https://yamllint.rea
   ```
   docker run --rm -v c:/users/default/my-project:/srv/jekyll arvikon/docis yamllint _config.yml
   ```
+
+# License
+
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
