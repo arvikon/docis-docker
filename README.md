@@ -4,11 +4,7 @@ Dockerized Jekyll-centric toolkit to test, verify, and optimize static site cont
 
 The image is based on `ruby:2.6.5-alpine`, and builds with:
 
-- Jekyll 4.0.0
-- HTMLproofer 3.15.1
-- image_optim 0.26.5
-- Vale 2.0.0-beta.2
-- yamllint 1.17.0
+![Jekyll version](https://img.shields.io/badge/Jekyll-4.0.0-informational) ![HTMLproofer version](https://img.shields.io/badge/HTMLproofer-3.15.1-informational) ![image_optim version](https://img.shields.io/badge/image__optim-0.26.5-informational) ![Vale version](https://img.shields.io/badge/Vale-2.0.0--beta.2-informational) ![yamllint version](https://img.shields.io/badge/yamllint-1.17.0-informational)
 
 **NOTE:** Although the image was created with the focus on Jekyll, you can use the tools for other content.
 
