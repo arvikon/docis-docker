@@ -2,182 +2,115 @@
 
 # Overview
 
-Dockerized Jekyll-centric toolkit to test, verify, and optimize static site content.
+Dockerized Jekyll-centric toolkit to test, verify, and optimize your static site content.
 
-The image is based on `ruby:2.6.5-alpine`, and builds with:
+The image builds on top of the `ruby:2.6.5-alpine` Docker image, and builds with [Jekyll](https://jekyllrb.com/) 4.0.0, [HTMLproofer](https://github.com/gjtorikian/html-proofer) 3.15.1, [image_optim](https://github.com/toy/image_optim) 0.26.5, [Vale](https://errata-ai.github.io/vale/) 2.0.0-beta.2, and [yamllint](https://github.com/adrienverge/yamllint) 1.17.0.
 
-[![Jekyll version](https://img.shields.io/badge/Jekyll-4.0.0-informational?style=social)](https://jekyllrb.com/) [![HTMLproofer version](https://img.shields.io/badge/HTMLproofer-3.15.1-informational?style=social)](https://github.com/gjtorikian/html-proofer) [![image_optim version](https://img.shields.io/badge/image__optim-0.26.5-informational?style=social)](https://github.com/toy/image_optim) [![Vale version](https://img.shields.io/badge/Vale-2.0.0--beta.2-informational?style=social)](https://errata-ai.github.io/vale/) [![yamllint version](https://img.shields.io/badge/yamllint-1.17.0-informational?style=social)](https://github.com/adrienverge/yamllint)
+# Build image
 
-# Usage
+```console
+docker build --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg BUILD_VERSION=[image_ver] -t [image_tag] .
+```
+
+where `[image_ver]` is a version of the image, and `[image_tag]` is a tag for the image.
+
+# Use image
 
 Although the image was created with the focus on Jekyll, you can use the tools for other content.
 
-Below are the basic use cases with recommended commands and their explanation.
+Below are the basic use cases with example commands and their explanation.
 
 You can use either Docker commands, or Shell commands upon starting a container.
 
 ## Start container and enter Shell
 
-- _Command_
+Start a container, map the project folder with the folder inside the container (`/srv/jekyll`), map the ports needed to serve the Jekyll site and access it from outside the container, and enter Shell:
 
-  ```
-  docker run --rm -it -v path/to/project:/srv/jekyll -p 4000:4000 arvikon/docis sh
-  ```
-
-- _Explanation_
-
-  Starts a container, maps the project folder with the folder inside the container (`/srv/jekyll`), maps the ports needed to serve the Jekyll site and access it from outside the container, and enters Shell.
-
-- _Example_
-
-  ```
-  docker run --rm -it -v c:/users/default/my-project:/srv/jekyll -p 4000:4000 arvikon/docis sh
-  ```
+```console
+docker run --rm -it -v path/to/project:/srv/jekyll -p 4000:4000 arvikon/docis sh
+```
 
 Upon entering Shell, you can use the tools by running the direct commands, for example, `jekyll b`, `jekyll s`, `htmlproofer _site`, `image_optim -r images`, `vale pages`, `yamllint _config.yml`, and so on.
 
 ## Build Jekyll site
 
-- _Command_
+Start a container, map the project folder with the folder inside the container (`/srv/jekyll`), and build the Jekyll site:
 
-  ```
-  docker run --rm -v path/to/project:/srv/jekyll arvikon/docis jekyll b
-  ```
+```console
+docker run --rm -v path/to/project:/srv/jekyll arvikon/docis jekyll b
+```
 
-- _Explanation_
+**Note:** By default, Jekyll operates in the `development` [environment](https://jekyllrb.com/docs/configuration/environments/). If you want to build a Jekyll site in a different environment, for example `production`, use a bit modified command:
 
-  Starts a container, maps the project folder with the folder inside the container (`/srv/jekyll`), and builds the Jekyll site.
-
-  | NOTE |
-  | :--- |
-  | By default, Jekyll operates in the `development` [environment](https://jekyllrb.com/docs/configuration/environments/). If you want to build a Jekyll site in a different environment, for example `production`, use a bit modified command: `docker run --rm -v path/to/project:/srv/jekyll arvikon/docis sh -c "JEKYLL_ENV=production jekyll b"` |
-
-- _Examples_
-
-  ```
-  docker run --rm -v c:/users/default/my-project:/srv/jekyll arvikon/docis jekyll b
-  ```
-
-  ```
-  docker run --rm -v c:/users/default/my-project:/srv/jekyll arvikon/docis sh -c "JEKYLL_ENV=production jekyll b"
-  ```
+```console
+docker run --rm -v path/to/project:/srv/jekyll arvikon/docis sh -c "JEKYLL_ENV=production jekyll b"
+```
 
 ## Serve Jekyll site
 
-- _Command_
+Start a container, map the project folder with the folder inside the container (`/srv/jekyll`), map the ports needed to serve the Jekyll site and access it from outside the container, and serve the Jekyll site:
 
-  ```
-  docker run --rm -it -v path/to/project:/srv/jekyll -p 4000:4000 arvikon/docis jekyll s --host 0.0.0.0
-  ```
+```console
+docker run --rm -it -v path/to/project:/srv/jekyll -p 4000:4000 arvikon/docis jekyll s --host 0.0.0.0
+```
 
-- _Explanation_
+**Important:** `--host 0.0.0.0` is required.
 
-  Starts a container, maps the project folder with the folder inside the container (`/srv/jekyll`), maps the ports needed to serve the Jekyll site and access it from outside the container, and serves the Jekyll site.
-  
-  | IMPORTANT |
-  | :--- |
-  | `--host 0.0.0.0` is required. |
+**Note:** By default, Jekyll operates in the `development` [environment](https://jekyllrb.com/docs/configuration/environments/). If you want to serve a Jekyll site in a different environment, e.g. `production`, use a bit modified command:
 
-  | NOTE |
-  | :--- |
-  | By default, Jekyll operates in the `development` [environment](https://jekyllrb.com/docs/configuration/environments/). If you want to serve a Jekyll site in a different environment, e.g. `production`, use a bit modified command: `docker run --rm -it -v path/to/project:/srv/jekyll -p 4000:4000 arvikon/docis sh -c "JEKYLL_ENV=production jekyll s --host 0.0.0.0"` |
-
-- _Examples_
-
-  ```
-  docker run --rm -it -v c:/users/default/my-project:/srv/jekyll -p 4000:4000 arvikon/docis jekyll s -I --host 0.0.0.0 --profile --force-polling
-  ```
-
-  ```
-  docker run --rm -it -v c:/users/default/my-project:/srv/jekyll -p 4000:4000 arvikon/docis sh -c "JEKYLL_ENV=production jekyll s -I --host 0.0.0.0 --profile --force-polling"
-  ```
+```console
+docker run --rm -it -v path/to/project:/srv/jekyll -p 4000:4000 arvikon/docis sh -c "JEKYLL_ENV=production jekyll s --host 0.0.0.0"
+```
 
 ## Check links using HTMLproofer
 
 For details on using HTMLproofer, see [HTMLproofer documentation](https://github.com/gjtorikian/html-proofer/).
 
-- _Command_
+Start a container, map the project folder with the folder inside the container (`/srv/jekyll`), and check links in the built site folder:
 
-  ```
-  docker run --rm -v path/to/project:/srv/jekyll arvikon/docis htmlproofer [options] [built_site_folder_name]
-  ```
+```console
+docker run --rm -v path/to/project:/srv/jekyll arvikon/docis htmlproofer [options] [built_site_folder_name]
+```
 
-- _Explanation_
+**Note:** You have to build the project beforehand.
 
-  Starts a container, maps the project folder with the folder inside the container (`/srv/jekyll`), and checks links in the built site folder.
-  
-  | NOTE |
-  | :--- |
-  | You have to build the project beforehand. |
+**Example**
 
-- _Example_
-
-  ```
-  docker run --rm -v c:/users/default/my-project:/srv/jekyll arvikon/docis htmlproofer --assume-extension --allow-hash-href --empty-alt-ignore --disable-external --url-ignore "#0" _site
+```console
+docker run --rm -v c:/users/default/my-project:/srv/jekyll arvikon/docis htmlproofer --assume-extension --allow-hash-href --empty-alt-ignore --disable-external --url-ignore "#0" _site
+```
 
 ## Optimize image assets using image_optim
 
 For details on using image_optim, see [image_optim documentation](https://github.com/toy/image_optim/).
 
-- _Command_
+Start a container, map the project folder with the folder inside the container (`/srv/jekyll`), and optimize images in the folder:
 
-  ```
-  docker run --rm -v path/to/project:/srv/jekyll arvikon/docis image_optim -r [image_folder_name]
-  ```
-
-- _Explanation_
-
-  Starts a container, maps the project folder with the folder inside the container (`/srv/jekyll`), and optimizes images inside the folder.
-
-- _Example_
-
-  ```
-  docker run --rm -v c:/users/default/my-project:/srv/jekyll arvikon/docis image_optim -r images
-  ```
+```console
+docker run --rm -v path/to/project:/srv/jekyll arvikon/docis image_optim -r [image_folder_name]
+```
 
 ## Lint content using Vale
 
 For details on using Vale, see [Vale documentation](https://errata-ai.github.io/vale/).
 
-- _Command_
+Start a container, map the project folder with the folder inside the container (`/srv/jekyll`), and test source files against the Vale style rules:
 
-  ```
-  docker run --rm -v path/to/project:/srv/jekyll arvikon/docis vale [source_files_folder_name]
-  ```
+```console
+docker run --rm -v path/to/project:/srv/jekyll arvikon/docis vale [source_files_folder_name]
+```
 
-- _Explanation_
+**Tip:** It is recommended to place the Vale configuration file (`.vale.ini` or `_vale.ini`) in the project's root.
 
-  Starts a container, maps the project folder with the folder inside the container (`/srv/jekyll`), and tests source files against the styles.
-  
-  | TIP  |
-  | :--- |
-  | It is recommended to place the Vale configuration file (`.vale.ini` or `_vale.ini`) in the project's root. |
-
-- _Example_
-
-  ```
-  docker run --rm -v c:/users/default/my-project:/srv/jekyll arvikon/docis vale --no-wrap pages
-  ```
-
-## Lint YAML files
+## Lint YAML files usign yamllint
 
 For details on using yamllint, see [yamllint documentation](https://yamllint.readthedocs.io/).
 
-- _Command_
+Start a container, map the project folder with the folder inside the container (`/srv/jekyll`), and lint YAML files specified under `[lint_target]`:
 
-  ```
-  docker run --rm -v path/to/project:/srv/jekyll arvikon/docis yamllint [lint_target]
-  ```
-
-- _Explanation_
-
-  Starts a container, maps the project folder with the folder inside the container (`/srv/jekyll`), and lints YAML files specified under `[lint_target]`.
-
-- _Example_
-
-  ```
-  docker run --rm -v c:/users/default/my-project:/srv/jekyll arvikon/docis yamllint _config.yml
-  ```
+```console
+docker run --rm -v path/to/project:/srv/jekyll arvikon/docis yamllint [lint_target]
+```
 
 # License
 
