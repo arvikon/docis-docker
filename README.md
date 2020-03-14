@@ -4,7 +4,7 @@
 
 Dockerized Jekyll-centric toolkit to test, verify, and optimize your static site content.
 
-The image builds on top of `ruby:2.6.5-alpine` with [Jekyll](https://jekyllrb.com/) 4.0.0, [HTMLproofer](https://github.com/gjtorikian/html-proofer) 3.15.1, [image_optim](https://github.com/toy/image_optim) 0.26.5, [Vale](https://errata-ai.github.io/vale/) 2.0.0-beta.2, and [yamllint](https://github.com/adrienverge/yamllint) 1.17.0.
+The image builds on top of `ruby:2.6.5-alpine` with [Jekyll](https://jekyllrb.com/) 4.0.0, [HTMLproofer](https://github.com/gjtorikian/html-proofer) 3.15.1, [image_optim](https://github.com/toy/image_optim) 0.26.5, [Vale](https://errata-ai.github.io/vale/) 2.1.0, and [yamllint](https://github.com/adrienverge/yamllint) 1.17.0.
 
 # Build image
 
@@ -98,7 +98,7 @@ docker run --rm -v path/to/project:/srv/jekyll arvikon/docis image_optim -r [ima
 
 ## Lint content using Vale
 
-For details on using Vale, see [Vale documentation](https://errata-ai.github.io/vale/).
+For details on using Vale, see [Vale documentation](https://errata-ai.gitbook.io/vale/).
 
 Start a container, map the project folder with the folder inside the container (`/srv/jekyll`), and test source files against the Vale style rules:
 
