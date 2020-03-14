@@ -14,6 +14,8 @@ ENV \
   JPEGARCHIVE_VERSION="2.2.0" \
   # https://static.jonof.id.au/dl/kenutils/
   PNGOUT_VERSION="20200115"
+  # https://github.com/errata-ai/vale/releases
+  VALE_VERSION="2.1.0"
 #
 # Set build arguments
 ARG BUILD_DATE
@@ -38,7 +40,7 @@ LABEL org.label-schema.vcs-url="https://github.com/arvikon/docis-docker"
 COPY --from=fleshgrinder/yamllint /usr/local/bin/yamllint /usr/local/bin/
 #
 # Copy Vale binary from official image -- jdkato/vale
-COPY --from=jdkato/vale /bin/vale /usr/local/bin/
+# COPY --from=jdkato/vale /bin/vale /usr/local/bin/
 #
 # Set temporary working directory for image building
 WORKDIR /tmp
@@ -87,6 +89,10 @@ RUN apk update && apk --no-cache add \
   && npm install -g svgo \
   # ruby gems
   && gem install jekyll bundler html-proofer image_optim \
+  # Get vale from github
+  && wget https://github.com/errata-ai/vale/releases/download/v${VALE_VERSION}/vale_${VALE_VERSION}_Linux_64-bit.tar.gz \
+  && tar zxf vale_${VALE_VERSION}_Linux_64-bit.tar.gz \
+  && cp -f vale /usr/local/bin \
   # cleanup
   && rm -rf /usr/share/ri \
   && rm -rf /tmp/* \
