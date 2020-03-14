@@ -13,7 +13,7 @@ ENV \
   # https://github.com/danielgtaylor/jpeg-archive/releases
   JPEGARCHIVE_VERSION="2.2.0" \
   # https://static.jonof.id.au/dl/kenutils/
-  PNGOUT_VERSION="20200115"
+  PNGOUT_VERSION="20200115" \
   # https://github.com/errata-ai/vale/releases
   VALE_VERSION="2.1.0"
 #
