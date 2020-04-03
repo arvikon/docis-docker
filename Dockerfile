@@ -37,7 +37,7 @@ LABEL org.label-schema.vcs-url="https://github.com/arvikon/docis-docker"
 # LABEL org.label-schema.vendor=
 #
 # Copy yamllint binary
-COPY --from=flintci/yamllint /usr/local/bin/yamllint /usr/local/bin/
+COPY --from=fleshgrinder/yamllint /usr/local/bin/yamllint /usr/local/bin/
 #
 # Copy Vale binary
 # COPY --from=jdkato/vale /bin/vale /usr/local/bin/
