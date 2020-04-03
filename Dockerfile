@@ -2,6 +2,18 @@
 # Name and tag the image (if built w/o) : docker tag IMAGE_ID name:tag
 # Upload the image to hub               : docker push arvikon/docis:$BUILD_VERSION
 #
+# Create yamllint binary with PyInstaller
+FROM six8/pyinstaller-alpine
+ENV YL_VER="1.21.0"
+RUN \
+  wget https://github.com/adrienverge/yamllint/archive/v${YL_VER}.tar.gz \
+  && tar zxf v${YL_VER}.tar.gz \
+  && cd yamllint-${YL_VER} \
+  && python setup.py install \
+  && cd yamllint \
+  && pyinstaller --add-data ./conf/default.yaml:yamllint/conf --add-data ./conf/relaxed.yaml:yamllint/conf --clean --name yamllint --noconfirm --onefile ./__main__.py \
+  && cp -f ./dist/yamllint /srv
+#
 # Define base image
 FROM ruby:2.6.5-alpine
 #
@@ -36,10 +48,11 @@ LABEL org.label-schema.vcs-url="https://github.com/arvikon/docis-docker"
 # LABEL org.label-schema.vcs-ref=
 # LABEL org.label-schema.vendor=
 #
-# Copy yamllint binary
-COPY --from=fleshgrinder/yamllint /usr/local/bin/yamllint /usr/local/bin/
+COPY --from=0 /srv/yamllint /usr/local/bin/
+# Copy yamllint binary (image is outdated; contains yamllint 1.17.0)
+# COPY --from=fleshgrinder/yamllint /usr/local/bin/yamllint /usr/local/bin/
 #
-# Copy Vale binary
+# Copy Vale binary (image is behind releases)
 # COPY --from=jdkato/vale /bin/vale /usr/local/bin/
 #
 # Set temporary working directory for image building
