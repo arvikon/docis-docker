@@ -63,7 +63,7 @@ RUN apk update && apk --no-cache add \
   pngcrush \
   pngquant \
   jpeg \
-  && apk add jhead advancecomp --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted \
+  && apk add jhead advancecomp --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --repository http://dl-3.alpinelinux.org/alpine/edge/community/ \
   # build dependencies
   && apk add --virtual build-dependencies \
   build-base \
