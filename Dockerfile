@@ -69,6 +69,7 @@ RUN apk update && apk --no-cache add \
   # utils
   curl \
   make \
+  util-linux \
   # image_optim deps
   gifsicle \
   jpegoptim \
