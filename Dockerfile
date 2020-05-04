@@ -4,7 +4,7 @@
 #
 # Create yamllint binary with PyInstaller
 FROM six8/pyinstaller-alpine
-ENV YL_VER="1.21.0"
+ENV YL_VER="1.23.0"
 RUN \
   wget https://github.com/adrienverge/yamllint/archive/v${YL_VER}.tar.gz \
   && tar zxf v${YL_VER}.tar.gz \
@@ -49,7 +49,7 @@ LABEL org.label-schema.vcs-url="https://github.com/arvikon/docis-docker"
 # LABEL org.label-schema.vendor=
 #
 COPY --from=0 /srv/yamllint /usr/local/bin/
-# Copy yamllint binary (image is outdated; contains yamllint 1.17.0)
+# Copy yamllint binary (image is outdated)
 # COPY --from=fleshgrinder/yamllint /usr/local/bin/yamllint /usr/local/bin/
 #
 # Copy Vale binary (image is behind releases)
@@ -58,10 +58,10 @@ COPY --from=0 /srv/yamllint /usr/local/bin/
 # Set temporary working directory for image building
 WORKDIR /tmp
 #
-# Install all external utilities, leaving only the compiled/installed
+# Install all external utils, leaving only the compiled/installed
 # binaries behind to minimize the footprint of the image layer.
 RUN apk update && apk --no-cache add \
-  # runtime dependencies
+  # runtime deps
   # ruby dev tools
   ruby-dev \
   # svgo deps
@@ -72,29 +72,31 @@ RUN apk update && apk --no-cache add \
   util-linux \
   # image_optim deps
   gifsicle \
+  jpeg \
   jpegoptim \
   optipng \
   pngcrush \
   pngquant \
-  jpeg \
+  zlib \
   && apk add jhead advancecomp --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --repository http://dl-3.alpinelinux.org/alpine/edge/community/ \
-  # build dependencies
+  # build deps
   && apk add --virtual build-dependencies \
   build-base \
-  # mozjpeg
+  # mozjpeg deps
   pkgconfig autoconf automake libtool nasm \
-  # jpeg-recompress (from jpeg-archive along with mozjpeg dependency)
+  # mozjpeg
   && curl -L -O https://github.com/mozilla/mozjpeg/archive/v${MOZJPEG_VERSION}.tar.gz \
   && tar zxf v${MOZJPEG_VERSION}.tar.gz \
   && cd mozjpeg-${MOZJPEG_VERSION} \
   && autoreconf -fiv && ./configure && make && make install \
   && cd .. \
+  # jpeg-recompress (from jpeg-archive)
   && curl -L -O https://github.com/danielgtaylor/jpeg-archive/archive/v${JPEGARCHIVE_VERSION}.tar.gz \
   && tar zxf v${JPEGARCHIVE_VERSION}.tar.gz \
   && cd jpeg-archive-${JPEGARCHIVE_VERSION} \
   && make && make install \
   && cd .. \
-  # pngout (binary distrib)
+  # pngout
   && curl -L -O https://static.jonof.id.au/dl/kenutils/pngout-${PNGOUT_VERSION}-linux-static.tar.gz \
   && tar zxf pngout-${PNGOUT_VERSION}-linux-static.tar.gz \
   && cd pngout-${PNGOUT_VERSION}-linux-static \
@@ -103,7 +105,7 @@ RUN apk update && apk --no-cache add \
   && npm install -g svgo \
   # ruby gems
   && gem install jekyll bundler html-proofer image_optim \
-  # Get vale from github
+  # vale
   && wget https://github.com/errata-ai/vale/releases/download/v${VALE_VERSION}/vale_${VALE_VERSION}_Linux_64-bit.tar.gz \
   && tar zxf vale_${VALE_VERSION}_Linux_64-bit.tar.gz \
   && cp -f vale /usr/local/bin \
