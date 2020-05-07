@@ -27,7 +27,7 @@ ENV \
 #
 # Set build arguments
 ARG BUILD_DATE
-ARG BUILD_VERSION
+ARG BUILD_VER
 ARG VCS_REF
 #
 # Add image metadata
@@ -35,7 +35,7 @@ ARG VCS_REF
 LABEL org.label-schema.schema-version="1.0"
 LABEL org.label-schema.name="arvikon/docis"
 LABEL org.label-schema.description="Jekyll-centric toolkit to proof, optimize, and verify your static site content"
-LABEL org.label-schema.version=${BUILD_VERSION}
+LABEL org.label-schema.version=${BUILD_VER}
 LABEL org.label-schema.build-date=${BUILD_DATE}
 LABEL org.label-schema.url="https://hub.docker.com/r/arvikon/docis"
 LABEL org.label-schema.usage="https://hub.docker.com/r/arvikon/docis"
