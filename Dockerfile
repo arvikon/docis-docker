@@ -1,21 +1,17 @@
-# Build a named and tagged image        : docker build --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg BUILD_VERSION=1.1 -t arvikon/docis .
-# Name and tag the image (if built w/o) : docker tag IMAGE_ID name:tag
-# Upload the image to hub               : docker push arvikon/docis:$BUILD_VERSION
-#
 # Create yamllint binary with PyInstaller
 FROM six8/pyinstaller-alpine
-ENV YL_VER="1.23.0"
+ENV YAMLLINT_VER="1.23.0"
 RUN \
-  wget https://github.com/adrienverge/yamllint/archive/v${YL_VER}.tar.gz \
-  && tar zxf v${YL_VER}.tar.gz \
-  && cd yamllint-${YL_VER} \
+  wget https://github.com/adrienverge/yamllint/archive/v${YAMLLINT_VER}.tar.gz \
+  && tar zxf v${YAMLLINT_VER}.tar.gz \
+  && cd yamllint-${YAMLLINT_VER} \
   && python setup.py install \
   && cd yamllint \
   && pyinstaller --add-data ./conf/default.yaml:yamllint/conf --add-data ./conf/relaxed.yaml:yamllint/conf --clean --name yamllint --noconfirm --onefile ./__main__.py \
   && cp -f ./dist/yamllint /srv
 #
 # Define base image
-FROM ruby:2.6.5-alpine
+FROM ruby:2.7.1-alpine
 #
 # Define environment variables for library versions
 # Based on https://hub.docker.com/r/colthreepv/docker-image_optim/dockerfile
@@ -32,6 +28,7 @@ ENV \
 # Set build arguments
 ARG BUILD_DATE
 ARG BUILD_VERSION
+ARG VCS_REF
 #
 # Add image metadata
 # See http://label-schema.org/rc1/
@@ -45,10 +42,12 @@ LABEL org.label-schema.usage="https://hub.docker.com/r/arvikon/docis"
 LABEL org.label-schema.docker.cmd="docker run --rm -it -v path/to/project:/srv/jekyll -p 4000:4000 arvikon/docis"
 LABEL maintainer="arvikon@outlook.com"
 LABEL org.label-schema.vcs-url="https://github.com/arvikon/docis-docker"
-# LABEL org.label-schema.vcs-ref=
+LABEL org.label-schema.vcs-ref=${VCS_REF}
 # LABEL org.label-schema.vendor=
 #
+# Copy yamllint binary
 COPY --from=0 /srv/yamllint /usr/local/bin/
+#
 # Copy yamllint binary (image is outdated)
 # COPY --from=fleshgrinder/yamllint /usr/local/bin/yamllint /usr/local/bin/
 #
@@ -85,19 +84,19 @@ RUN apk update && apk --no-cache add \
   # mozjpeg deps
   pkgconfig autoconf automake libtool nasm \
   # mozjpeg
-  && curl -L -O https://github.com/mozilla/mozjpeg/archive/v${MOZJPEG_VERSION}.tar.gz \
+  && wget https://github.com/mozilla/mozjpeg/archive/v${MOZJPEG_VERSION}.tar.gz \
   && tar zxf v${MOZJPEG_VERSION}.tar.gz \
   && cd mozjpeg-${MOZJPEG_VERSION} \
   && autoreconf -fiv && ./configure && make && make install \
   && cd .. \
   # jpeg-recompress (from jpeg-archive)
-  && curl -L -O https://github.com/danielgtaylor/jpeg-archive/archive/v${JPEGARCHIVE_VERSION}.tar.gz \
+  && wget https://github.com/danielgtaylor/jpeg-archive/archive/v${JPEGARCHIVE_VERSION}.tar.gz \
   && tar zxf v${JPEGARCHIVE_VERSION}.tar.gz \
   && cd jpeg-archive-${JPEGARCHIVE_VERSION} \
   && make && make install \
   && cd .. \
   # pngout
-  && curl -L -O https://static.jonof.id.au/dl/kenutils/pngout-${PNGOUT_VERSION}-linux-static.tar.gz \
+  && wget https://static.jonof.id.au/dl/kenutils/pngout-${PNGOUT_VERSION}-linux-static.tar.gz \
   && tar zxf pngout-${PNGOUT_VERSION}-linux-static.tar.gz \
   && cd pngout-${PNGOUT_VERSION}-linux-static \
   && cp -f aarch64/pngout-static /usr/local/bin/pngout \
