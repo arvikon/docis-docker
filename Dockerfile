@@ -11,7 +11,7 @@ RUN \
   && cp -f ./dist/yamllint /srv
 #
 # Define base image
-FROM ruby:2.7.1-alpine
+FROM ruby:2.6-alpine
 #
 # Define environment variables for library versions
 # Based on https://hub.docker.com/r/colthreepv/docker-image_optim/dockerfile
