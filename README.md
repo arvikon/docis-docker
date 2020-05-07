@@ -9,7 +9,7 @@ The image builds on top of `ruby:2.7.1-alpine` with [Jekyll](https://jekyllrb.co
 # Build image
 
 ```console
-docker build --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg BUILD_VERSION=[ver] -t [tag] .
+docker build --build-arg VCS_REF=$(git rev-parse --short HEAD) --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg BUILD_VERSION=$(date +%Y%m%d) -t arvikon/docis .
 ```
 
 where `[ver]` is a version of the image, and `[tag]` is a tag for the image.
