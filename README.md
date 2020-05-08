@@ -9,7 +9,7 @@ The image builds on top of `ruby:2.6-alpine` with [Jekyll](https://jekyllrb.com/
 # Build image
 
 ```console
-docker build --build-arg VCS_REF=[vcs_ref] --build-arg BUILD_DATE=[build_date] --build-arg BUILD_VER=[build_ver] -t [name]/[tag] .
+docker build --build-arg VCS_REF=[vcs_ref] --build-arg BUILD_DATE=[build_date] --build-arg BUILD_VER=[build_ver] -t [name]:[tag] .
 ```
 
 # Use image
