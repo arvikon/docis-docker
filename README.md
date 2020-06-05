@@ -4,9 +4,9 @@
 
 Dockerized Jekyll-centric toolkit to test, verify, and optimize your static site content.
 
-The image builds on top of `ruby:2.6-alpine` with [Jekyll](https://jekyllrb.com/) 4.0.0, [HTMLproofer](https://github.com/gjtorikian/html-proofer) 3.15.3, [image_optim](https://github.com/toy/image_optim) 0.26.5, [Vale](https://errata-ai.github.io/vale/) 2.1.1, and [yamllint](https://github.com/adrienverge/yamllint) 1.23.0.
+The image builds on top of `ruby:2.6-alpine` with [Jekyll](https://jekyllrb.com/) 4.1.0, [HTMLproofer](https://github.com/gjtorikian/html-proofer) 3.15.3, [image_optim](https://github.com/toy/image_optim) 0.26.5, [Vale](https://errata-ai.gitbook.io/vale/) 2.2.2, and [yamllint](https://github.com/adrienverge/yamllint) 1.23.0.
 
-# Build image
+# Build image locally
 
 ```console
 docker build --build-arg VCS_REF=[vcs_ref] --build-arg BUILD_DATE=[build_date] --build-arg BUILD_VER=[build_ver] -t [name]:[tag] .
@@ -18,7 +18,7 @@ Although the image was created with the focus on Jekyll, you can use its tools w
 
 Below are the basic use cases with example commands and their explanation.
 
-You can use either Docker commands, or Shell commands upon starting a container.
+You can use either Docker commands from your operating system, or Shell commands upon starting a container.
 
 ## Start container and enter Shell
 
@@ -38,7 +38,8 @@ Start a container, map the project folder with the folder inside the container (
 docker run --rm -v path/to/project:/srv/jekyll arvikon/docis jekyll b
 ```
 
-By default, Jekyll operates in the `development` [environment](https://jekyllrb.com/docs/configuration/environments/). If you want to build a Jekyll site in a different environment, for example `production`, use a bit modified command:
+By default, Jekyll operates in the `development` [environment](https://jekyllrb.com/docs/configuration/environments/).
+If you want to build a Jekyll site in a different environment, for example `production`, use a bit modified command:
 
 ```console
 docker run --rm -v path/to/project:/srv/jekyll arvikon/docis sh -c "JEKYLL_ENV=production jekyll b"
@@ -54,13 +55,16 @@ docker run --rm -it -v path/to/project:/srv/jekyll -p 4000:4000 arvikon/docis je
 
 **Important:** `--host 0.0.0.0` is required.
 
-By default, Jekyll operates in the `development` [environment](https://jekyllrb.com/docs/configuration/environments/). If you want to serve a Jekyll site in a different environment, for example `production`, use a bit modified command:
+By default, Jekyll operates in the `development` [environment](https://jekyllrb.com/docs/configuration/environments/).
+If you want to serve a Jekyll site in a different environment, for example `production`, use a bit modified command:
 
 ```console
 docker run --rm -it -v path/to/project:/srv/jekyll -p 4000:4000 arvikon/docis sh -c "JEKYLL_ENV=production jekyll s --host 0.0.0.0"
 ```
 
-If you use Docker on Windows, and your site uses _relative_ URL addresses, to properly serve the site from the container based on this image, you must explicitly set `JEKYLL_ENV` to any other value than `development`. (For details, see [Jekyll, Docker, Windows, and 0.0.0.0](https://tonyho.net/jekyll-docker-windows-and-0-0-0-0/).) For example:
+If you use Docker on Windows, and your site uses _relative_ URL addresses, to properly serve the site from the container based on this image, you must explicitly set `JEKYLL_ENV` to any other value than `development`.
+(For details, see [Jekyll, Docker, Windows, and 0.0.0.0](https://tonyho.net/jekyll-docker-windows-and-0-0-0-0/).)
+For example:
 
 ```console
 docker run --rm -it -v path/to/project:/srv/jekyll -p 4000:4000 arvikon/docis sh -c "JEKYLL_ENV=docker jekyll s --host 0.0.0.0"
@@ -118,4 +122,5 @@ docker run --rm -v path/to/project:/srv/jekyll arvikon/docis yamllint [lint_targ
 
 # License
 
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/arvikon/docis-docker/blob/master/LICENSE) file for details.
+This project is licensed under the MIT License.
+See the [LICENSE](https://github.com/arvikon/docis-docker/blob/master/LICENSE) file for details.
