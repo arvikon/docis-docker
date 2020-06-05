@@ -23,7 +23,7 @@ ENV \
   # https://static.jonof.id.au/dl/kenutils/
   PNGOUT_VERSION="20200115" \
   # https://github.com/errata-ai/vale/releases
-  VALE_VERSION="2.1.1"
+  VALE_VERSION="2.2.2"
 #
 # Set build arguments
 ARG BUILD_DATE
@@ -67,6 +67,7 @@ RUN apk update && apk --no-cache add \
   npm \
   # utils
   curl \
+  libc6-compat \
   make \
   util-linux \
   # image_optim deps
