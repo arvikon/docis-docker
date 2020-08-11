@@ -23,7 +23,7 @@ ENV \
   # https://static.jonof.id.au/dl/kenutils/
   PNGOUT_VERSION="20200115" \
   # https://github.com/errata-ai/vale/releases
-  VALE_VERSION="2.3.0"
+  VALE_VERSION="2.3.1"
 #
 # Set build arguments
 ARG BUILD_DATE
