@@ -1,6 +1,6 @@
 # Create yamllint binary with PyInstaller
 FROM six8/pyinstaller-alpine
-ENV YAMLLINT_VER="1.24.2"
+ENV YAMLLINT_VER="1.25.0"
 RUN \
   wget https://github.com/adrienverge/yamllint/archive/v${YAMLLINT_VER}.tar.gz \
   && tar zxf v${YAMLLINT_VER}.tar.gz \
