@@ -23,7 +23,7 @@ ENV \
   # https://static.jonof.id.au/dl/kenutils/
   PNGOUT_VERSION="20200115" \
   # https://github.com/errata-ai/vale/releases
-  VALE_VERSION="2.5.0"
+  VALE_VERSION="2.5.1"
 #
 # Set build arguments
 ARG BUILD_DATE
@@ -63,7 +63,7 @@ RUN apk update && apk --no-cache add \
   # runtime deps
   # ruby dev tools
   ruby-dev \
-  # svgo deps
+  # node
   npm \
   # utils
   curl \
@@ -101,8 +101,8 @@ RUN apk update && apk --no-cache add \
   && tar zxf pngout-${PNGOUT_VERSION}-linux-static.tar.gz \
   && cd pngout-${PNGOUT_VERSION}-linux-static \
   && cp -f aarch64/pngout-static /usr/local/bin/pngout \
-  # svgo
-  && npm install -g svgo \
+  # svgo 
+  && npm install -g svgo pa11y-ci pa11y-ci-reporter-html \
   # ruby gems
   && gem install jekyll bundler html-proofer image_optim \
   # vale
