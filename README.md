@@ -4,7 +4,7 @@
 
 Dockerized Jekyll-centric toolkit to test, verify, and optimize your static site content.
 
-The image builds on top of `ruby:2.6-alpine` with [Jekyll](https://jekyllrb.com/) 4.1.1, [HTMLproofer](https://github.com/gjtorikian/html-proofer) 3.16.0, [image_optim](https://github.com/toy/image_optim) 0.27.1, [Vale](https://docs.errata.ai/vale/about/) 2.5.1, [yamllint](https://github.com/adrienverge/yamllint) 1.25.0, and [pa11y-ci](https://github.com/pa11y/pa11y-ci) 2.4.0.
+The image builds on top of `ruby:2.6-alpine` with [Jekyll](https://jekyllrb.com/) 4.1.1, [HTMLproofer](https://github.com/gjtorikian/html-proofer) 3.16.0, [image_optim](https://github.com/toy/image_optim) 0.27.1, [Vale](https://docs.errata.ai/vale/about/) 2.5.1, and [yamllint](https://github.com/adrienverge/yamllint) 1.25.0.
 
 # Build image locally
 
@@ -118,24 +118,6 @@ Start a container, map the project folder with the folder inside the container (
 
 ```console
 docker run --rm -v path/to/project:/srv/jekyll arvikon/docis yamllint [lint_target]
-```
-
-## Test for accessibility using pa11y-ci
-
-For details on using pa11y-ci, see [pa11y-ci documentation](https://github.com/pa11y/pa11y-ci).
-
-Start a container, map the project folder with the folder inside the container (`/srv/jekyll`), and test HTML files in the built site folder:
-
-```console
-docker run --rm -v path/to/project:/srv/jekyll arvikon/docis pa11y-ci '[built_site_folder_name]/**/*.html'
-```
-
-**Note:** You have to build the project beforehand.
-
-**Example**
-
-```console
-docker run --rm -v path/to/project:/srv/jekyll arvikon/docis pa11y-ci '_site/**/*.html'
 ```
 
 # License
