@@ -4,7 +4,7 @@
 
 Dockerized Jekyll-centric toolkit to test, verify, and optimize your static site content.
 
-The image builds on top of `ruby:2.7.2-alpine` with [Jekyll](https://jekyllrb.com/) 4.2.0, [HTMLproofer](https://github.com/gjtorikian/html-proofer) 3.18.2, [image_optim](https://github.com/toy/image_optim) 0.28.0, [Vale](https://docs.errata.ai/vale/about/) 2.6.8, and [yamllint](https://github.com/adrienverge/yamllint) 1.25.0.
+The image builds on top of `ruby:2.7.2-alpine` with [Jekyll](https://jekyllrb.com/) 4.2.0, [markdownlint](https://github.com/DavidAnson/markdownlint) 0.22.0 with [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) 0.0.13, [HTMLproofer](https://github.com/gjtorikian/html-proofer) 3.18.5, [image_optim](https://github.com/toy/image_optim) 0.28.0, [Vale](https://docs.errata.ai/vale/about/) 2.6.8, and [yamllint](https://github.com/adrienverge/yamllint) 1.25.0.
 
 # Build image locally
 
@@ -68,6 +68,22 @@ For example:
 
 ```console
 docker run --rm -it -v path/to/project:/srv/jekyll -p 4000:4000 arvikon/docis sh -c "JEKYLL_ENV=docker jekyll s --host 0.0.0.0"
+```
+
+## Check Markdown syntax using markdownlint
+
+For details on using markdownlint, see [markdownlint](https://github.com/DavidAnson/markdownlint) and [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) documentation.
+
+Start a container, map the project folder with a folder inside the container (`/srv/jekyll`), and check syntax in Markdown files:
+
+```console
+docker run --rm -v path/to/project:/srv/jekyll arvikon/docis sh -c "markdownlint-cli2 [folder_with_Markdown_files]"
+```
+
+**Example**
+
+```console
+docker run --rm -v c:/users/default/my-project:/srv/jekyll arvikon/docis sh -c "markdownlint-cli2 _site"
 ```
 
 ## Check links using HTMLproofer

@@ -103,6 +103,8 @@ RUN apk update && apk --no-cache add \
   && cp -f aarch64/pngout-static /usr/local/bin/pngout \
   # svgo 
   && npm install -g svgo \
+  # markdownlint
+  && npm install -g markdownlint markdownlint-cli2 \
   # ruby gems
   && gem install jekyll bundler html-proofer image_optim \
   # vale
