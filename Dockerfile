@@ -17,9 +17,9 @@ FROM ruby:2.7.2-alpine
 # Based on https://hub.docker.com/r/colthreepv/docker-image_optim/dockerfile
 ENV \
   # https://github.com/mozilla/mozjpeg/releases
-  MOZJPEG_VERSION="3.3.1" \
+  # MOZJPEG_VERSION="4.0.2" \
   # https://github.com/danielgtaylor/jpeg-archive/releases
-  JPEGARCHIVE_VERSION="2.2.0" \
+  # JPEGARCHIVE_VERSION="2.2.0" \
   # https://static.jonof.id.au/dl/kenutils/
   PNGOUT_VERSION="20200115" \
   # https://github.com/errata-ai/vale/releases
@@ -83,28 +83,26 @@ RUN apk update && apk --no-cache add \
   && apk add --virtual build-dependencies \
   build-base \
   # mozjpeg deps
-  pkgconfig autoconf automake libtool nasm \
+  # pkgconf autoconf automake libtool nasm \
   # mozjpeg
-  && wget https://github.com/mozilla/mozjpeg/archive/v${MOZJPEG_VERSION}.tar.gz \
-  && tar zxf v${MOZJPEG_VERSION}.tar.gz \
-  && cd mozjpeg-${MOZJPEG_VERSION} \
-  && autoreconf -fiv && ./configure && make && make install \
-  && cd .. \
+  # && wget https://github.com/mozilla/mozjpeg/archive/v${MOZJPEG_VERSION}.tar.gz \
+  # && tar zxf v${MOZJPEG_VERSION}.tar.gz \
+  # && cd mozjpeg-${MOZJPEG_VERSION} \
+  # && autoreconf -fiv && ./configure && make && make install \
+  # && cd .. \
   # jpeg-recompress (from jpeg-archive)
-  && wget https://github.com/danielgtaylor/jpeg-archive/archive/v${JPEGARCHIVE_VERSION}.tar.gz \
-  && tar zxf v${JPEGARCHIVE_VERSION}.tar.gz \
-  && cd jpeg-archive-${JPEGARCHIVE_VERSION} \
-  && make && make install \
-  && cd .. \
+  # && wget https://github.com/danielgtaylor/jpeg-archive/archive/v${JPEGARCHIVE_VERSION}.tar.gz \
+  # && tar zxf v${JPEGARCHIVE_VERSION}.tar.gz \
+  # && cd jpeg-archive-${JPEGARCHIVE_VERSION} \
+  # && make && make install \
+  # && cd .. \
   # pngout
   && wget https://static.jonof.id.au/dl/kenutils/pngout-${PNGOUT_VERSION}-linux-static.tar.gz \
   && tar zxf pngout-${PNGOUT_VERSION}-linux-static.tar.gz \
   && cd pngout-${PNGOUT_VERSION}-linux-static \
   && cp -f aarch64/pngout-static /usr/local/bin/pngout \
-  # svgo 
-  && npm install -g svgo \
-  # markdownlint
-  && npm install -g markdownlint markdownlint-cli2 \
+  # svgo, markdownlint
+  && npm i -g svgo markdownlint markdownlint-cli2 \
   # ruby gems
   && gem install jekyll bundler html-proofer image_optim \
   # vale
