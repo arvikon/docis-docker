@@ -66,6 +66,8 @@ RUN apk update && apk --no-cache add \
   # node
   npm \
   # utils
+  gcc \
+  musl-dev \
   curl \
   libc6-compat \
   make \

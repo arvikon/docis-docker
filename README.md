@@ -4,7 +4,7 @@
 
 Dockerized Jekyll-centric toolkit to test, verify, and optimize your static site content.
 
-The image builds on top of `ruby:2.7.2-alpine` with [Jekyll](https://jekyllrb.com/) 4.2.0, [markdownlint](https://github.com/DavidAnson/markdownlint) 0.23.1 with [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) 0.0.13, [HTMLproofer](https://github.com/gjtorikian/html-proofer) 3.19.0, [image_optim](https://github.com/toy/image_optim) 0.28.0, [Vale](https://docs.errata.ai/vale/about/) 2.10.2, and [yamllint](https://github.com/adrienverge/yamllint) 1.26.1.
+The image builds on top of `ruby:2.7.2-alpine` with [Jekyll](https://jekyllrb.com/) 4.2.0, [markdownlint](https://github.com/DavidAnson/markdownlint) 0.23.1 with [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) 0.1.2, [HTMLproofer](https://github.com/gjtorikian/html-proofer) 3.19.0, [image_optim](https://github.com/toy/image_optim) 0.28.0, [Vale](https://docs.errata.ai/vale/about/) 2.10.2, and [yamllint](https://github.com/adrienverge/yamllint) 1.26.1.
 
 # Build image locally
 
