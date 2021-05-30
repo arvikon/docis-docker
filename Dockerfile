@@ -11,7 +11,7 @@ RUN \
   && cp -f ./dist/yamllint /srv
 #
 # Define base image
-FROM ruby:2.7.2-alpine
+FROM ruby:2.7.3-alpine
 #
 # Define environment variables for library versions
 # Based on https://hub.docker.com/r/colthreepv/docker-image_optim/dockerfile
@@ -23,7 +23,7 @@ ENV \
   # https://static.jonof.id.au/dl/kenutils/
   PNGOUT_VERSION="20200115" \
   # https://github.com/errata-ai/vale/releases
-  VALE_VERSION="2.10.2"
+  VALE_VERSION="2.10.3"
 #
 # Set build arguments
 ARG BUILD_DATE
