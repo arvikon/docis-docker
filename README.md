@@ -1,16 +1,16 @@
-# Overview
+# docis
 
 Dockerized Jekyll-centric toolkit to test, verify, and optimize your static site content.
 
-The image builds on top of `ruby:2.7.3-alpine` with [Jekyll](https://jekyllrb.com/) 4.2.0, [markdownlint](https://github.com/DavidAnson/markdownlint) 0.24.0 with [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) 0.2.0, [HTMLproofer](https://github.com/gjtorikian/html-proofer) 3.19.2, [image_optim](https://github.com/toy/image_optim) 0.30.0, [Vale](https://docs.errata.ai/vale/about/) 2.10.5, and [yamllint](https://github.com/adrienverge/yamllint) 1.26.3.
+The image builds on top of `ruby:2.7.3-alpine` with [Jekyll](https://jekyllrb.com/) 4.2.0, [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) 0.2.0 with [markdownlint](https://github.com/DavidAnson/markdownlint) 0.23.1, [HTMLproofer](https://github.com/gjtorikian/html-proofer) 3.19.2, [image_optim](https://github.com/toy/image_optim) 0.30.0, [Vale](https://docs.errata.ai/vale/about/) 2.10.5, and [yamllint](https://github.com/adrienverge/yamllint) 1.26.3.
 
-# Build image locally
+## Build image locally
 
 ```console
 docker build --build-arg VCS_REF=[vcs_ref] --build-arg BUILD_DATE=[build_date] --build-arg BUILD_VER=[build_ver] -t [name]:[tag] .
 ```
 
-# Use image
+## Use image
 
 Although the image was created with the focus on Jekyll, you can use its tools with other content and static site generators.
 
@@ -18,7 +18,7 @@ Below are the basic use cases with example commands and their explanation.
 
 You can use either Docker commands from your operating system, or Shell commands upon starting a container.
 
-## Start container and enter Shell
+### Start container and enter Shell
 
 Start a container, map the project folder with the folder inside the container (`/srv/jekyll`), map the ports needed to serve the Jekyll site and access it from outside the container, and enter Shell:
 
@@ -28,7 +28,7 @@ docker run --rm -it -v path/to/project:/srv/jekyll -p 4000:4000 arvikon/docis sh
 
 Upon entering Shell, you can use the tools by running the direct commands, for example, `jekyll b`, `jekyll s`, `htmlproofer _site`, `image_optim -r images`, `vale pages`, `yamllint _config.yml`, and so on.
 
-## Build Jekyll site
+### Build Jekyll site
 
 Start a container, map the project folder with the folder inside the container (`/srv/jekyll`), and build the Jekyll site:
 
@@ -43,7 +43,7 @@ If you want to build a Jekyll site in a different environment, for example `prod
 docker run --rm -v path/to/project:/srv/jekyll arvikon/docis sh -c "JEKYLL_ENV=production jekyll b"
 ```
 
-## Serve Jekyll site
+### Serve Jekyll site
 
 Start a container, map the project folder with the folder inside the container (`/srv/jekyll`), map the ports needed to serve the Jekyll site and access it from outside the container, and serve the Jekyll site:
 
@@ -68,7 +68,7 @@ For example:
 docker run --rm -it -v path/to/project:/srv/jekyll -p 4000:4000 arvikon/docis sh -c "JEKYLL_ENV=docker jekyll s --host 0.0.0.0"
 ```
 
-## Check Markdown syntax using markdownlint
+### Check Markdown syntax using markdownlint
 
 For details on using markdownlint, see [markdownlint](https://github.com/DavidAnson/markdownlint) and [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) documentation.
 
@@ -78,13 +78,13 @@ Start a container, map the project folder with a folder inside the container (`/
 docker run --rm -v path/to/project:/srv/jekyll arvikon/docis sh -c "markdownlint-cli2 [folder_with_Markdown_files]"
 ```
 
-**Example**
+**Example:**
 
 ```console
 docker run --rm -v c:/users/default/my-project:/srv/jekyll arvikon/docis sh -c "markdownlint-cli2 _site"
 ```
 
-## Check links using HTMLproofer
+### Check links using HTMLproofer
 
 For details on using HTMLproofer, see [HTMLproofer documentation](https://github.com/gjtorikian/html-proofer/).
 
@@ -96,13 +96,13 @@ docker run --rm -v path/to/project:/srv/jekyll arvikon/docis htmlproofer [option
 
 **Note:** You have to build the project beforehand.
 
-**Example**
+**Example:**
 
 ```console
 docker run --rm -v c:/users/default/my-project:/srv/jekyll arvikon/docis htmlproofer --assume-extension --allow-hash-href --empty-alt-ignore --disable-external --url-ignore "#0" _site
 ```
 
-## Optimize image assets using image_optim
+### Optimize image assets using image_optim
 
 For details on using image_optim, see [image_optim documentation](https://github.com/toy/image_optim/).
 
@@ -112,7 +112,7 @@ Start a container, map the project folder with the folder inside the container (
 docker run --rm -v path/to/project:/srv/jekyll arvikon/docis image_optim -r [image_folder_name]
 ```
 
-## Lint content using Vale
+### Lint content using Vale
 
 For details on using Vale, see [Vale documentation](https://errata-ai.gitbook.io/vale/).
 
@@ -124,7 +124,7 @@ docker run --rm -v path/to/project:/srv/jekyll arvikon/docis vale [source_files_
 
 **Tip:** It is recommended to place the Vale configuration file (`.vale.ini` or `_vale.ini`) in the project's root.
 
-## Lint YAML files using yamllint
+### Lint YAML files using yamllint
 
 For details on using yamllint, see [yamllint documentation](https://yamllint.readthedocs.io/).
 
@@ -134,7 +134,7 @@ Start a container, map the project folder with the folder inside the container (
 docker run --rm -v path/to/project:/srv/jekyll arvikon/docis yamllint [lint_target]
 ```
 
-# License
+## License
 
 This project is licensed under the MIT License.
 See the [LICENSE](https://github.com/arvikon/docis-docker/blob/master/LICENSE) file for details.
