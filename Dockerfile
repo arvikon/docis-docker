@@ -23,7 +23,7 @@ ENV \
   # https://static.jonof.id.au/dl/kenutils/
   PNGOUT_VERSION="20200115" \
   # https://github.com/errata-ai/vale/releases
-  VALE_VERSION="2.11.2"
+  VALE_VERSION="2.14.0"
 #
 # Set build arguments
 ARG BUILD_DATE
@@ -80,7 +80,7 @@ RUN apk update && apk --no-cache add \
   pngcrush \
   pngquant \
   zlib \
-  && apk add jhead advancecomp --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --repository http://dl-3.alpinelinux.org/alpine/edge/community/ \
+  && apk add jhead advancecomp oxipng --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --repository http://dl-3.alpinelinux.org/alpine/edge/community/ \
   # build deps
   && apk add --virtual build-dependencies \
   build-base \
