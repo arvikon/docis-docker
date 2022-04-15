@@ -106,7 +106,7 @@ RUN apk update && apk --no-cache add \
   # svgo, markdownlint
   && npm i -g svgo markdownlint-cli2 \
   # ruby gems
-  && gem install jekyll bundler html-proofer image_optim \
+  && gem install bundler jekyll jekyll-liquify-alt html-proofer image_optim \
   # vale
   && wget https://github.com/errata-ai/vale/releases/download/v${VALE_VERSION}/vale_${VALE_VERSION}_Linux_64-bit.tar.gz \
   && tar zxf vale_${VALE_VERSION}_Linux_64-bit.tar.gz \
