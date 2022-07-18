@@ -7,9 +7,9 @@ The image builds on top of `ruby:2.7.3-alpine` with
 [Jekyll](https://jekyllrb.com/) 4.2.2,
 [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) 0.4.0
 with [markdownlint](https://github.com/DavidAnson/markdownlint) 0.25.1,
-[HTMLproofer](https://github.com/gjtorikian/html-proofer) 3.19.4,
+[HTMLproofer](https://github.com/gjtorikian/html-proofer) 4.2.0,
 [image_optim](https://github.com/toy/image_optim) 0.31.1,
-[Vale](https://github.com/errata-ai/vale) 2.19.0, and
+[Vale](https://github.com/errata-ai/vale) 2.20.0, and
 [yamllint](https://github.com/adrienverge/yamllint) 1.26.3.
 
 ## Build image locally
