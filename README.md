@@ -5,12 +5,12 @@ verify, and optimize your static site content.
 
 The image builds on top of `ruby:2.7.3-alpine` with
 [Jekyll](https://jekyllrb.com/) 4.2.2,
-[markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) 0.4.0
-with [markdownlint](https://github.com/DavidAnson/markdownlint) 0.25.1,
-[HTMLproofer](https://github.com/gjtorikian/html-proofer) 4.2.0,
+[markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) 0.5.0
+with [markdownlint](https://github.com/DavidAnson/markdownlint) 0.26.1,
+[HTMLproofer](https://github.com/gjtorikian/html-proofer) 4.3.1,
 [image_optim](https://github.com/toy/image_optim) 0.31.1,
-[Vale](https://github.com/errata-ai/vale) 2.20.0, and
-[yamllint](https://github.com/adrienverge/yamllint) 1.26.3.
+[Vale](https://github.com/errata-ai/vale) 2.20.1, and
+[yamllint](https://github.com/adrienverge/yamllint) 1.27.1.
 
 ## Build image locally
 

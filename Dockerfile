@@ -1,13 +1,13 @@
 # Create yamllint binary with PyInstaller
-FROM six8/pyinstaller-alpine
-ENV YAMLLINT_VER="1.26.3"
+FROM six8/pyinstaller-alpine:alpine-3.6-pyinstaller-v3.4
+ENV YAMLLINT_VER="1.27.1"
 RUN \
-  wget https://github.com/adrienverge/yamllint/archive/v${YAMLLINT_VER}.tar.gz \
+  wget https://github.com/adrienverge/yamllint/archive/refs/tags/v${YAMLLINT_VER}.tar.gz \
   && tar zxf v${YAMLLINT_VER}.tar.gz \
   && cd yamllint-${YAMLLINT_VER} \
   && python setup.py install \
   && cd yamllint \
-  && pyinstaller --add-data ./conf/default.yaml:yamllint/conf --add-data ./conf/relaxed.yaml:yamllint/conf --clean --name yamllint --noconfirm --onefile ./__main__.py \
+  && pyinstaller --add-data ./conf/default.yaml:yamllint/conf --add-data ./conf/relaxed.yaml:yamllint/conf --name yamllint --noconfirm --onefile --clean ./__main__.py \
   && cp -f ./dist/yamllint /srv
 #
 # Define base image
@@ -23,7 +23,7 @@ ENV \
   # https://static.jonof.id.au/dl/kenutils/
   PNGOUT_VERSION="20200115" \
   # https://github.com/errata-ai/vale/releases
-  VALE_VERSION="2.20.0"
+  VALE_VERSION="2.20.1"
 #
 # Set build arguments
 ARG BUILD_DATE
