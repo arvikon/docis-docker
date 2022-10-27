@@ -3,8 +3,8 @@
 Dockerized Jekyll-centric toolkit to test,
 verify, and optimize your static site content.
 
-The image builds on top of `ruby:2.7.6-alpine3.16` with
-[Jekyll](https://jekyllrb.com/) 4.2.2,
+The image builds on top of `ruby:alpine3.16` with
+[Jekyll](https://jekyllrb.com/) 4.3.1,
 [HTMLproofer](https://github.com/gjtorikian/html-proofer) 4.4.3,
 [xmllint](http://xmlsoft.org/xmllint.html) 20914,
 [editorconfig-checker](https://editorconfig-checker.github.io/) 2.6.0,
@@ -40,7 +40,7 @@ site and access it from outside the container, and enter Shell:
 
 ```console
 docker run --rm -it -v path/to/project:/srv/jekyll \
-  -p 4000:4000 arvikon/docis:2.7.6
+  -p 4000:4000 arvikon/docis
 ```
 
 **Note:** `-p 4000:4000` is necessary to access
@@ -56,7 +56,7 @@ Start a container, map the project folder with the folder inside
 the container (`/srv/jekyll`), and build the Jekyll site:
 
 ```console
-docker run --rm -v path/to/project:/srv/jekyll arvikon/docis:2.7.6 jekyll build
+docker run --rm -v path/to/project:/srv/jekyll arvikon/docis jekyll build
 ```
 
 By default, Jekyll operates in the `development`
@@ -66,7 +66,7 @@ for example `production`, use a bit modified command:
 
 ```console
 docker run --rm -v path/to/project:/srv/jekyll \
-  arvikon/docis:2.7.6 JEKYLL_ENV=production jekyll build
+  arvikon/docis JEKYLL_ENV=production jekyll build
 ```
 
 ### Serve Jekyll site
@@ -77,7 +77,7 @@ and access it from outside the container, and serve the Jekyll site:
 
 ```console
 docker run --rm -v path/to/project:/srv/jekyll -p 4000:4000 \
-  arvikon/docis:2.7.6 jekyll serve -I --host 0.0.0.0
+  arvikon/docis jekyll serve -I --host 0.0.0.0
 ```
 
 **Important:** `--host 0.0.0.0` is required.
@@ -92,7 +92,7 @@ for example `production`, use a bit modified command:
 
 ```console
 docker run --rm -v path/to/project:/srv/jekyll -p 4000:4000 \
-  arvikon/docis:2.7.6 JEKYLL_ENV=production jekyll serve --host 0.0.0.0
+  arvikon/docis JEKYLL_ENV=production jekyll serve --host 0.0.0.0
 ```
 
 If you use Docker on Windows, and your site uses _relative_ URL addresses,
@@ -103,7 +103,7 @@ For example:
 
 ```console
 docker run --rm -v path/to/project:/srv/jekyll -p 4000:4000 \
-  arvikon/docis:2.7.6 JEKYLL_ENV=docker jekyll serve --host 0.0.0.0
+  arvikon/docis JEKYLL_ENV=docker jekyll serve --host 0.0.0.0
 ```
 
 ### Check links using HTMLproofer
@@ -116,7 +116,7 @@ container (`/srv/jekyll`), and check links in the built project folder:
 
 ```console
 docker run --rm -v path/to/project:/srv/jekyll \
-  arvikon/docis:2.7.6 htmlproofer [options] [built_project_folder]
+  arvikon/docis htmlproofer [options] [built_project_folder]
 ```
 
 **Note:** You have to build the project beforehand.
@@ -132,7 +132,7 @@ specified XML files in the build project folder:
 
 ```console
 docker run --rm -v path/to/project:/srv/jekyll \
-  arvikon/docis:2.7.6 xmllint [options] [xml_files]
+  arvikon/docis xmllint [options] [xml_files]
 ```
 
 **Note:** You have to build the project beforehand.
@@ -147,7 +147,7 @@ Start a container, map the project folder with the folder inside the container
 
 ```console
 docker run --rm -v path/to/project:/srv/jekyll \
-  arvikon/docis:2.7.6 ec [options] [targets]
+  arvikon/docis ec [options] [targets]
 ```
 
 ### Lint YAML files using yamllint
@@ -160,7 +160,7 @@ the container (`/srv/jekyll`), and lint the specified targets:
 
 ```console
 docker run --rm -v path/to/project:/srv/jekyll \
-  arvikon/docis:2.7.6 yamllint [options] [targets]
+  arvikon/docis yamllint [options] [targets]
 ```
 
 ### Check Markdown syntax using markdownlint
@@ -175,7 +175,7 @@ container (`/srv/jekyll`), and check syntax in the target Markdown files:
 
 ```console
 docker run --rm -v path/to/project:/srv/jekyll \
-  arvikon/docis:2.7.6 markdownlint-cli2 [options] [targets]
+  arvikon/docis markdownlint-cli2 [options] [targets]
 ```
 
 ### Lint content using Vale
@@ -188,7 +188,7 @@ container (`/srv/jekyll`), and lint the content of the targets:
 
 ```console
 docker run --rm -v path/to/project:/srv/jekyll \
-  arvikon/docis:2.7.6 vale [options] [targets]
+  arvikon/docis vale [options] [targets]
 ```
 
 **Tip:** It is recommended to place the Vale configuration
@@ -204,7 +204,7 @@ container (`/srv/jekyll`), and optimize images in the target:
 
 ```console
 docker run --rm -v path/to/project:/srv/jekyll \
-  arvikon/docis:2.7.6 image_optim [options] [target]
+  arvikon/docis image_optim [options] [target]
 ```
 
 ## License
