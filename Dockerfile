@@ -1,5 +1,5 @@
 # Define base image
-FROM ruby:2.7.6-alpine3.16
+FROM ruby:alpine3.16
 # Define environment variables for library versions
 # Based on https://hub.docker.com/r/colthreepv/docker-image_optim/dockerfile
 ENV \
@@ -68,12 +68,10 @@ RUN apk update \
   # ruby gems
   && gem install \
     bundler \
-    "jekyll:4.2.2" \
-    "kramdown:2.3.0" \
+    jekyll \
     "html-proofer:4.4.3" \
     image_optim \
     image_optim_pack \
-    jekyll-liquify-alt \
   # vale
   && wget https://github.com/errata-ai/vale/releases/download/v${VALE_VERSION}/vale_${VALE_VERSION}_Linux_64-bit.tar.gz \
   && tar zxf vale_${VALE_VERSION}_Linux_64-bit.tar.gz \
