@@ -1,35 +1,16 @@
-# Create yamllint binary with PyInstaller
-FROM six8/pyinstaller-alpine:alpine-3.6-pyinstaller-v3.4
-ENV YAMLLINT_VER="1.27.1"
-RUN \
-  wget https://github.com/adrienverge/yamllint/archive/refs/tags/v${YAMLLINT_VER}.tar.gz \
-  && tar zxf v${YAMLLINT_VER}.tar.gz \
-  && cd yamllint-${YAMLLINT_VER} \
-  && python setup.py install \
-  && cd yamllint \
-  && pyinstaller --add-data ./conf/default.yaml:yamllint/conf --add-data ./conf/relaxed.yaml:yamllint/conf --name yamllint --noconfirm --onefile --clean ./__main__.py \
-  && cp -f ./dist/yamllint /srv
-#
 # Define base image
-FROM ruby:2.7.3-alpine
-#
+FROM ruby:2.7.6-alpine3.16
 # Define environment variables for library versions
 # Based on https://hub.docker.com/r/colthreepv/docker-image_optim/dockerfile
 ENV \
-  # https://github.com/mozilla/mozjpeg/releases
-  # MOZJPEG_VERSION="4.0.2" \
-  # https://github.com/danielgtaylor/jpeg-archive/releases
-  # JPEGARCHIVE_VERSION="2.2.0" \
   # https://static.jonof.id.au/dl/kenutils/
   PNGOUT_VERSION="20200115" \
   # https://github.com/errata-ai/vale/releases
-  VALE_VERSION="2.20.1"
-#
+  VALE_VERSION="2.20.2"
 # Set build arguments
 ARG BUILD_DATE
 ARG BUILD_VER
 ARG VCS_REF
-#
 # Add image metadata
 # See http://label-schema.org/rc1/
 LABEL org.label-schema.schema-version="1.0"
@@ -43,61 +24,40 @@ LABEL org.label-schema.docker.cmd="docker run --rm -it -v path/to/project:/srv/j
 LABEL maintainer="arvikon@outlook.com"
 LABEL org.label-schema.vcs-url="https://github.com/arvikon/docis-docker"
 LABEL org.label-schema.vcs-ref=${VCS_REF}
-# LABEL org.label-schema.vendor=
-#
-# Copy yamllint binary
-COPY --from=0 /srv/yamllint /usr/local/bin/
-#
-# Copy yamllint binary (image is outdated)
-# COPY --from=fleshgrinder/yamllint /usr/local/bin/yamllint /usr/local/bin/
-#
-# Copy Vale binary (image is behind releases)
-# COPY --from=jdkato/vale /bin/vale /usr/local/bin/
-#
 # Set temporary working directory for image building
 WORKDIR /tmp
-#
 # Install all external utils, leaving only the compiled/installed
 # binaries behind to minimize the footprint of the image layer.
-RUN apk update && apk --no-cache add \
-  # runtime deps
-  # ruby dev tools
-  ruby-dev \
-  # node
-  npm \
-  # utils
-  gcc \
-  musl-dev \
-  curl \
-  libc6-compat \
-  make \
-  util-linux \
-  # image_optim deps
-  gifsicle \
-  jpeg \
-  jpegoptim \
-  optipng \
-  pngcrush \
-  pngquant \
-  zlib \
-  && apk add jhead advancecomp oxipng --allow-untrusted --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
+RUN apk update \
+  && apk --no-cache add \
+    # runtime deps
+    # ruby dev tools
+    ruby-dev \
+    # node
+    npm \
+    # utils
+    gcc \
+    musl-dev \
+    curl \
+    jq \
+    libc6-compat \
+    libxml2-utils \
+    make \
+    util-linux \
+    # image_optim deps
+    advancecomp \
+    gifsicle \
+    jpeg \
+    jpegoptim \
+    optipng \
+    pngcrush \
+    pngquant \
+    zlib \
+  && apk add jhead oxipng yamllint editorconfig-checker --update-cache \
+    --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
+    --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
   # build deps
-  && apk add --virtual build-dependencies \
-  build-base \
-  # mozjpeg deps
-  # pkgconf autoconf automake libtool nasm \
-  # mozjpeg
-  # && wget https://github.com/mozilla/mozjpeg/archive/v${MOZJPEG_VERSION}.tar.gz \
-  # && tar zxf v${MOZJPEG_VERSION}.tar.gz \
-  # && cd mozjpeg-${MOZJPEG_VERSION} \
-  # && autoreconf -fiv && ./configure && make && make install \
-  # && cd .. \
-  # jpeg-recompress (from jpeg-archive)
-  # && wget https://github.com/danielgtaylor/jpeg-archive/archive/v${JPEGARCHIVE_VERSION}.tar.gz \
-  # && tar zxf v${JPEGARCHIVE_VERSION}.tar.gz \
-  # && cd jpeg-archive-${JPEGARCHIVE_VERSION} \
-  # && make && make install \
-  # && cd .. \
+  && apk add --virtual build-dependencies build-base \
   # pngout
   && wget https://static.jonof.id.au/dl/kenutils/pngout-${PNGOUT_VERSION}-linux-static.tar.gz \
   && tar zxf pngout-${PNGOUT_VERSION}-linux-static.tar.gz \
@@ -106,7 +66,14 @@ RUN apk update && apk --no-cache add \
   # svgo, markdownlint
   && npm i -g svgo markdownlint-cli2 \
   # ruby gems
-  && gem install bundler jekyll jekyll-liquify-alt html-proofer image_optim \
+  && gem install \
+    bundler \
+    "jekyll:4.2.2" \
+    "kramdown:2.3.0" \
+    "html-proofer:4.4.3" \
+    image_optim \
+    image_optim_pack \
+    jekyll-liquify-alt \
   # vale
   && wget https://github.com/errata-ai/vale/releases/download/v${VALE_VERSION}/vale_${VALE_VERSION}_Linux_64-bit.tar.gz \
   && tar zxf vale_${VALE_VERSION}_Linux_64-bit.tar.gz \
@@ -116,13 +83,10 @@ RUN apk update && apk --no-cache add \
   && rm -rf /tmp/* \
   && apk del build-dependencies \
   && rm -rf /var/lib/apt/lists/*
-#
 # Set image working directory
 WORKDIR /srv/jekyll
-#
 # Set image volume to mount
 VOLUME /srv/jekyll
-#
 # Expose ports for Jekyll
 EXPOSE 35729
 EXPOSE 4000
