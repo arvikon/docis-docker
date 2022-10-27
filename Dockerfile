@@ -90,3 +90,4 @@ VOLUME /srv/jekyll
 # Expose ports for Jekyll
 EXPOSE 35729
 EXPOSE 4000
+CMD [ "sh" ]
