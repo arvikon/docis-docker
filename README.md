@@ -11,7 +11,7 @@ The image builds on top of `ruby:alpine3.16` with
 [yamllint](https://github.com/adrienverge/yamllint) 1.27.1,
 [markdownlint](https://github.com/DavidAnson/markdownlint) 0.26.2 with
 [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) 0.5.1,
-[Vale](https://github.com/errata-ai/vale) 2.20.2, and
+[Vale](https://github.com/errata-ai/vale) 2.21.0, and
 [image_optim](https://github.com/toy/image_optim) 0.31.1 with
 [image_optim_pack](https://github.com/toy/image_optim_pack) 0.9.1.
 
