@@ -8,11 +8,11 @@ The image builds on top of `ruby:alpine3.16` with
 [HTMLproofer](https://github.com/gjtorikian/html-proofer) 4.4.3,
 [xmllint](http://xmlsoft.org/xmllint.html) 20914,
 [editorconfig-checker](https://editorconfig-checker.github.io/) 2.6.0,
-[yamllint](https://github.com/adrienverge/yamllint) 1.27.1,
+[yamllint](https://github.com/adrienverge/yamllint) 1.26.3,
 [markdownlint](https://github.com/DavidAnson/markdownlint) 0.26.2 with
 [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) 0.5.1,
-[Vale](https://github.com/errata-ai/vale) 2.21.0, and
-[image_optim](https://github.com/toy/image_optim) 0.31.1 with
+[Vale](https://github.com/errata-ai/vale) 2.21.2, and
+[image_optim](https://github.com/toy/image_optim) 0.31.2 with
 [image_optim_pack](https://github.com/toy/image_optim_pack) 0.9.1.
 
 ## Build image locally
