@@ -6,7 +6,7 @@ ENV \
   # https://static.jonof.id.au/dl/kenutils/
   PNGOUT_VERSION="20200115" \
   # https://github.com/errata-ai/vale/releases
-  VALE_VERSION="2.21.2"
+  VALE_VERSION="2.23.0"
 # Set build arguments
 ARG BUILD_DATE
 ARG BUILD_VER
@@ -57,7 +57,7 @@ RUN apk update \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
   && apk add yamllint \
-    --repository http://dl-cdn.alpinelinux.org/alpine/v3.16/community/ \
+    --repository http://dl-cdn.alpinelinux.org/alpine/v3.17/community/ \
   # build deps
   && apk add --virtual build-dependencies build-base \
   # pngout
@@ -71,7 +71,7 @@ RUN apk update \
   && gem install \
     bundler \
     jekyll \
-    "html-proofer:4.4.3" \
+    html-proofer \
     image_optim \
     image_optim_pack \
   # vale
