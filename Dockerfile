@@ -6,7 +6,7 @@ ENV \
   # https://static.jonof.id.au/dl/kenutils/
   PNGOUT_VERSION="20200115" \
   # https://github.com/errata-ai/vale/releases
-  VALE_VERSION="2.23.0"
+  VALE_VERSION="2.25.1"
 # Set build arguments
 ARG BUILD_DATE
 ARG BUILD_VER
@@ -66,7 +66,7 @@ RUN apk update \
   && cd pngout-${PNGOUT_VERSION}-linux-static \
   && cp -f aarch64/pngout-static /usr/local/bin/pngout \
   # svgo, markdownlint
-  && npm i -g svgo markdownlint-cli2 \
+  && npm install -g svgo markdownlint-cli2 \
   # ruby gems
   && gem install \
     bundler \
