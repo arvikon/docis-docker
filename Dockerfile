@@ -1,12 +1,12 @@
 # Define base image
-FROM ruby:alpine3.16
+FROM ruby:alpine3.18
 # Define environment variables for library versions
 # Based on https://hub.docker.com/r/colthreepv/docker-image_optim/dockerfile
 ENV \
   # https://static.jonof.id.au/dl/kenutils/
   PNGOUT_VERSION="20200115" \
   # https://github.com/errata-ai/vale/releases
-  VALE_VERSION="2.25.1"
+  VALE_VERSION="2.28.0"
 # Set build arguments
 ARG BUILD_DATE
 ARG BUILD_VER
@@ -53,15 +53,13 @@ RUN apk update \
     pngcrush \
     pngquant \
     zlib \
-  && apk add jhead oxipng editorconfig-checker --update-cache \
+  && apk add jhead oxipng editorconfig-checker yamllint --update-cache \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
-  && apk add yamllint \
-    --repository http://dl-cdn.alpinelinux.org/alpine/v3.17/community/ \
   # build deps
   && apk add --virtual build-dependencies build-base \
   # pngout
-  && wget https://static.jonof.id.au/dl/kenutils/pngout-${PNGOUT_VERSION}-linux-static.tar.gz \
+  && wget https://www.jonof.id.au/files/kenutils/pngout-${PNGOUT_VERSION}-linux-static.tar.gz \
   && tar zxf pngout-${PNGOUT_VERSION}-linux-static.tar.gz \
   && cd pngout-${PNGOUT_VERSION}-linux-static \
   && cp -f aarch64/pngout-static /usr/local/bin/pngout \
