@@ -8,7 +8,7 @@ The image builds on top of `ruby:alpine3.18` with
 [HTMLproofer](https://github.com/gjtorikian/html-proofer) 5.0.7,
 [xmllint](http://xmlsoft.org/xmllint.html) 21104,
 [editorconfig-checker](https://editorconfig-checker.github.io/) 2.7.0,
-[yamllint](https://github.com/adrienverge/yamllint) 1.28.0,
+[yamllint](https://github.com/adrienverge/yamllint) 1.32.0,
 [markdownlint](https://github.com/DavidAnson/markdownlint) 0.29.0 with
 [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) 0.8.1,
 [Vale](https://github.com/errata-ai/vale) 2.28.0, and
